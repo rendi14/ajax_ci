@@ -148,9 +148,25 @@
         
     }
 
-    $(document).on('click', '.group', function () { 
-        const target = $(this).data('target')
-        console.log(target)
-     });
+    groupColumn = 1;
+    $('#tabel_user tbody').on('click', 'tr.group', function () {
+        const isDisActived = $(this).hasClass('panel-disactived')
+        if(isDisActived) {
+            $(this)
+                .addClass('panel-actived')
+                .removeClass('panel-disactived');
+                
+            const target = $(this).data('target');
+            $(`.${target}`).show()
+
+        }else{
+            $(this)
+                .addClass('panel-disactived')
+                .removeClass('panel-actived');
+
+            const target = $(this).data('target');
+            $(`.${target}`).hide()
+        }
+    });
 </script>
 <?= $this->endSection() ?>
