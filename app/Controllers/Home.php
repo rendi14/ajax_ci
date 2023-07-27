@@ -32,11 +32,7 @@ class Home extends BaseController
                  ->orderBy('kewarganegaraan');
 
         return DataTable::of($users)
-                ->filter(function ($builder, $request) {
-                    if($request->search['value']) {
-                        $builder->orWhere('nama_negara', $request->search['value']);
-                    }
-                })
+               ->setSearchableColumns(['nama', 'nik', 'alamat', 'code_negara', 'nama_negara'])
                ->addNumbering('nomor')
                ->edit('status', function($user) {
                     return ($user->status == 1) ? '<span class="text-success">Active</span>' : '<span class="text-danger">In Active</span>';
