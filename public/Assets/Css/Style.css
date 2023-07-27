@@ -31185,3 +31185,24 @@ span.twitter-typeahead .tt-suggestion {
 .collapse-up-down {
   float: right;
 }
+
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.dtspinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -30px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  animation: spinner .6s linear infinite;
+}
