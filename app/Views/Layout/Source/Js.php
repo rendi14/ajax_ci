@@ -13,8 +13,10 @@
 <script src="../Assets/Vendor/Js/feather-icon/feather-icon.js"></script>
 
 <!-- Bootstrap js-->
-<script src="../Assets/Vendor/Js/bootstrap/popper.min.js"></script>
-<script src="../Assets/Vendor/Js/bootstrap/bootstrap.min.js"></script>
+<!--<script src="../Assets/Vendor/Js/bootstrap/popper.min.js"></script> -->
+<!--<script src="../Assets/Vendor/Js/bootstrap/bootstrap.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 
 <!-- Sidebar jquery-->
 <script src="../Assets/Vendor/Js/sidebar-menu.js"></script>
@@ -26,10 +28,8 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- Main Js -->
-<script src="../Assets/Js/Main.js"></script>
-
-
-
+<script src="<?= base_url('Assets/Js/Main.js') ?>"></script>
+<?= $this->renderSection('pushScript') ?>
 <script>
     $(function() {
         <?php if (session()->has("success")) { ?>

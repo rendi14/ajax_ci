@@ -31178,3 +31178,10 @@ span.twitter-typeahead .tt-suggestion {
 /* end swal */
 
 
+.cursor-pointer {
+   cursor: pointer;
+}
+
+.collapse-up-down {
+  float: right;
+}

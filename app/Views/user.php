@@ -37,46 +37,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data as $key) { ?>
-                                    <?php 
-                                          $db      = \Config\Database::connect();
-                                          $cols =  $db->table('master_user')->where('kewarganegaraan =', $key->id_kewarganegaraan);
-                                          $querys = $cols->get()->getResult();
-                                    ?>
-                                    <tr>
-                                       <td colspan="7" class="header-room" data-id="<?= $key->id_kewarganegaraan ?>" style="text-align:left; background-color:#80808036">
-                                       <div class="d-flex justify-content-between"><?= $key->code_negara ?> <?=  $key->nama_negara ?> <i style="font-size:20px" class="fa fa-angle-down" aria-hidden="true"></i></div>
-                                       </td> 
-                                        <?php $no=1; foreach($querys as $item) {?>
-                                            <!-- <div > -->
-                                            <tr class="child-room-<?= $key->id_kewarganegaraan ?>">
-                                                <td>
-                                                    <?= $no++ ?>
-                                                </td>
-                                                <td>
-                                                    <?= $item->nama ?>
-                                                </td>
-                                                <td>
-                                                    <?= $item->nik ?>
-                                                </td>
-                                                <td>
-                                                    <?= $item->alamat ?>
-                                                </td>
-                                                <td>
-                                                    <?php if($item->status == 1):?>
-                                                        <span class="text-success">Active</span>
-                                                    <?php else:?>
-                                                        <span class="text-danger">In Active</span>
-                                                    <?php endif?>
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-primary">Edit</button>
-                                                </td>
-                                            </tr>
-                                            <!-- </div> -->
-                                        <?php }?>
-                                    </tr>
-                                <?php }?>
+                            <?php 
+                            foreach ($users as $user) { 
+                                
+                            ?>
+                                <tr>
+                                   <td colspan="7" class="header-room" data-id="<?= $user->kewarganegaraan ?>" style="text-align:left; background-color:#80808036">
+                                   <div class="d-flex justify-content-between"><?= $user->code_negara ?> <?=  $user->nama_negara ?> <i style="font-size:20px" class="fa fa-angle-down" aria-hidden="true"></i></div>
+                                   </td> 
+                                        <!-- <div > -->
+                                        <tr class="child-room-<?= $user->kewarganegaraan ?>">
+                                            <td><?= $no++ ?></td>
+                                            <td><?= $user->nama ?></td>
+                                            <td><?= $user->nik ?></td>
+                                            <td><?= $user->alamat ?></td>
+                                            <td>
+                                                <?= ($user->status == 1) ? '<span class="text-success">Active</span>' : '<span class="text-danger">In Active</span>' ?>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary">Edit</button>
+                                            </td>
+                                        </tr>
+                                        <!-- </div> -->
+                                </tr>
+                            <?php }?>
                             </tbody>
                         </table>
                     </div>

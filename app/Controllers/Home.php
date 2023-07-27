@@ -4,15 +4,29 @@ namespace App\Controllers;
 
 use App\Models\User;
 use Config\Services;
+use Config\Database;
 
 class Home extends BaseController
 {
+    protected $db;
+    function __construct()
+    {
+        $this->db = Database::connect();
+    }
+
     public function index()
     {
-        $db      = \Config\Database::connect();
-        $builder = $db->table('kewarganegaraan');
-        $query['data'] = $builder->get()->getResult();
-        return view('user', $query);
+        $users = $this->db->table('master_user')
+                 ->select('master_user.*, code_negara, nama_negara')
+                 ->join('kewarganegaraan', 'kewarganegaraan.id_kewarganegaraan = master_user.kewarganegaraan', 'left')
+                 ->orderBy('kewarganegaraan')
+                 ->get()
+                 ->getResult();
+
+        return view('users', [
+            'no' => 1,
+            'users' => $users
+        ]);
     }
 
     // public function ajax_list()
