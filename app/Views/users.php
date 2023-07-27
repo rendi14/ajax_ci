@@ -37,22 +37,7 @@
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            <?php foreach ($users as $user) { ?>
-                                <tr class="<?= $user->code_negara ?>">
-                                    </td> 
-                                        <td>{{ nomor }}</td>
-                                        <td><?= $user->code_negara .' '. $user->nama_negara ?></td>
-                                        <td><?= $user->nama ?></td>
-                                        <td><?= $user->nik ?></td>
-                                        <td><?= $user->alamat ?></td>
-                                        <td>
-                                            <?= ($user->status == 1) ? '<span class="text-success">Active</span>' : '<span class="text-danger">In Active</span>' ?>
-                                        </td>
-                                        <td><button class="btn btn-primary">Edit</button></td>
-                                </tr>
-                            <?php }?>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -85,11 +70,31 @@
 
 <?= $this->section('pushScript') ?>
 <script>
+$(document).ready(function() {
     const table = $('#tabel_user').DataTable({
-        "columnDefs": [
-            { "visible": false, "targets": 1 }
+        "processing": true,
+        "serverSide": true,
+        "language": {
+            'loadingRecords': '&nbsp;',
+            'processing': '<div class="dtspinner"></div>'
+        },     
+        "ajax": {
+            "type": 'GET',
+            "url": '/'
+        },
+        "order": [],
+        "columns": [
+            {'data': 'nomor', orderable: false},
+            {'data': 'grouped', orderable: false},
+            {'data': 'nama', orderable: false},
+            {'data': 'nik', orderable: false},
+            {'data': 'alamat', orderable: false},
+            {'data': 'status', orderable: false},
+            {'data': 'action', orderable: false},
         ],
-        "order": [[ 1, 'asc' ]],
+        "columnDefs": [
+            { "visible": false, "targets": 1 },
+        ],
         "displayLength": 25,
         "drawCallback": function ( settings ) {
             let api = this.api();
@@ -109,20 +114,11 @@
                     last = group;
                 }
             } );
+        },
+        "createdRow": function (row, data, index) {
+            $( row ).addClass(data.code_negara)
         }
     });
-
-    table
-    .on('order.dt search.dt', function () {
-        let i = 1;
- 
-        table
-            .cells(null, 0, { search: 'applied', order: 'applied' })
-            .every(function (cell) {
-                this.data(i++);
-            });
-    })
-    .draw();
 
     table.on('page.dt', function () { 
         const info = table.page.info();
@@ -155,7 +151,7 @@
             $(this)
                 .addClass('panel-actived')
                 .removeClass('panel-disactived');
-                
+
             const target = $(this).data('target');
             $(`.${target}`).show()
 
@@ -168,5 +164,6 @@
             $(`.${target}`).hide()
         }
     });
+});
 </script>
 <?= $this->endSection() ?>

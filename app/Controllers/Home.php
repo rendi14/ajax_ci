@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\User;
 use Config\Services;
 use Config\Database;
+use Hermawan\DataTables\DataTable;
 
 class Home extends BaseController
 {
@@ -16,16 +17,29 @@ class Home extends BaseController
 
     public function index()
     {
-        $users = $this->db->table('master_user')
-                 ->select('master_user.*, code_negara, nama_negara')
-                 ->join('kewarganegaraan', 'kewarganegaraan.id_kewarganegaraan = master_user.kewarganegaraan', 'left')
-                 ->orderBy('kewarganegaraan')
-                 ->get()
-                 ->getResult();
+        if($this->request->isAJAX()) {
+            return $this->loadAjax();
+        }
 
-        return view('users', [
-            'users' => $users
-        ]);
+        return view('users');
+    }
+
+    protected function loadAjax()
+    {
+        $users = $this->db->table('master_user')
+                 ->select('master_user.id, nama, nik, alamat, master_user.status, kewarganegaraan, code_negara, nama_negara')
+                 ->join('kewarganegaraan', 'kewarganegaraan.id_kewarganegaraan = master_user.kewarganegaraan', 'left')
+                 ->orderBy('kewarganegaraan');
+
+        return DataTable::of($users)
+               ->addNumbering('nomor')
+               ->edit('status', function($user) {
+                    return ($user->status == 1) ? '<span class="text-success">Active</span>' : '<span class="text-danger">In Active</span>';
+               })->add('grouped', function($user) {
+                    return $user->code_negara .' '. $user->nama_negara;
+               })->add('action', function($user) {
+                    return '<button class="btn btn-primary">Edit</button>';
+               })->toJson(true);
     }
 
     // public function ajax_list()
