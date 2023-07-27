@@ -24,7 +24,6 @@ class Home extends BaseController
                  ->getResult();
 
         return view('users', [
-            'no' => 1,
             'users' => $users
         ]);
     }
